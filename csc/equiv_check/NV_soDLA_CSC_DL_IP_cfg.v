@@ -720,7 +720,7 @@ module NV_soDLA_CSC_DL_IP_cfg_gate( // @[:@3.2]
   `endif // RANDOMIZE_REG_INIT
   end
 `endif // RANDOMIZE
-  always @(posedge nvdla_core_clk or posedge _T_214) begin
+  always @(posedge nvdla_core_clk) begin
     if (_T_214) begin
       _T_312 <= 1'h0;
     end else begin
