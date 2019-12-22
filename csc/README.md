@@ -3,7 +3,7 @@ csc
 
 
 
-| Module | equivalent checking failedyosys) | pass the PPtester? |
+| Module | equivalent checking failed(yosys) | pass the PPtester? |
 | ------ | ----------- | -------------------|
 | NV_NVDLA_CSC_DL_IP_cfg   | Trying to prove $equiv for \dataout_w_init [0 to 12]: failed. | pass |
 | NV_NVDLA_CSC_DL_IP_cfg(d1) |  Grouping SAT models for \data_bank [4:1]:  |might overflow|
