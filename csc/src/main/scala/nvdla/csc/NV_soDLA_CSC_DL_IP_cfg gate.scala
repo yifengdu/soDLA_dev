@@ -4,6 +4,8 @@ import chisel3._
 import chisel3.experimental._
 import chisel3.util._
 
+
+@chiselName
 class NV_soDLA_CSC_DL_IP_cfg_gate(implicit val conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         //clock
@@ -77,7 +79,7 @@ val sub_h_total_w = Mux(is_img, "b1001".asUInt(6.W) << io.reg2dp.y_extension, "b
 val sub_h_cmp_w = Mux(is_img, sub_h_total_w, Mux(is_winograd, 2.U, 1.U))
 io.dataout_w_init := sub_h_cmp_w -& 1.U
 
-val conv_x_stride_w = Mux(is_winograd, 1.U, io.reg2dp.conv_x_stride_ext +& 1.U)
+val conv_x_stride_w = Mux(is_winograd, 1.U(4.W), io.reg2dp.conv_x_stride_ext +& 1.U)
 val pixel_x_stride_w = MuxLookup(io.reg2dp.datain_channel_ext(1,0), conv_x_stride_w, 
                        Array(3.U -> Cat(conv_x_stride_w, "b0".asUInt(2.W)), //*4, after pre_extension
                              2.U -> (Cat(conv_x_stride_w, "b0".asUInt(1.W)) +& conv_x_stride_w)))//*3
