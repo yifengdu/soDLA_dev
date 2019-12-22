@@ -77,8 +77,8 @@ module NV_soDLA_CSC_DL_IP_cfg_gate( // @[:@3.2]
   output [12:0] h_bias_2_stride, // @[:@6.4]
   output [12:0] h_bias_3_stride, // @[:@6.4]
   output [14:0] rls_entries, // @[:@6.4]
-  output [13:0] done_last_slices, // @[:@6.4]
-  output [14:0] done_last_entries // @[:@6.4]
+  output [13:0] last_slices, // @[:@6.4]
+  output [14:0] last_entries // @[:@6.4]
 );
   wire  _T_214; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 53:38:@8.4]
   wire  layer_st; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 58:32:@9.4]
@@ -488,8 +488,8 @@ module NV_soDLA_CSC_DL_IP_cfg_gate( // @[:@3.2]
   assign h_bias_2_stride = _T_470; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 170:31:@338.4]
   assign h_bias_3_stride = _T_474; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 171:32:@344.4]
   assign rls_entries = _T_477; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 172:28:@349.4]
-  assign done_last_slices = _T_480; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 175:33:@354.4]
-  assign done_last_entries = _T_483; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 176:34:@359.4]
+  assign last_slices = _T_480; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 175:33:@354.4]
+  assign last_entries = _T_483; // @[NV_soDLA_CSC_DL_IP_cfg gate.scala 176:34:@359.4]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -1094,6 +1094,7 @@ module NV_soDLA_CSC_DL_IP_cfg_gate( // @[:@3.2]
 endmodule
 
 
+
 module NV_NVDLA_CSC_dl (
   input         nvdla_core_clk, // @[:@6.4]
   input         nvdla_core_rstn, // @[:@6.4]
@@ -1173,8 +1174,8 @@ module NV_NVDLA_CSC_dl (
   output [12:0] h_bias_2_stride, // @[:@6.4]
   output [12:0] h_bias_3_stride, // @[:@6.4]
   output [14:0] rls_entries, // @[:@6.4]
-  output [13:0] done_last_slices, // @[:@6.4]
-  output [14:0] done_last_entries // @[:@6.4]
+  output [13:0] last_slices, // @[:@6.4]
+  output [14:0] last_entries // @[:@6.4]
 );
 
 //////////////////////////////////////////////////////////////
