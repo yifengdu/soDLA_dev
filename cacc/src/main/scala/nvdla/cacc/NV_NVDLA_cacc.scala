@@ -6,7 +6,6 @@ import chisel3.util._
 import chisel3.iotesters.Driver
 
 
-@chiselName
 class NV_NVDLA_CACC(implicit conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         // clk
@@ -157,7 +156,7 @@ withReset(!io.nvdla_core_rstn){
     // SLCG groups
     //==========================================================
 
-    val u_slcg_op = Array.fill(3){Module(new NV_soDLA_slcg(1, false))}
+    val u_slcg_op = Array.fill(3){Module(new NV_NVDLA_slcg(1, false))}
 
     for(i<- 0 to 2){
         u_slcg_op(i).io.nvdla_clock := io.nvdla_clock 
@@ -165,7 +164,7 @@ withReset(!io.nvdla_core_rstn){
         nvdla_op_gated_clk(i) := u_slcg_op(i).io.nvdla_core_gated_clk                                                                                               
     }
 
-    val u_slcg_cell_0 = Module(new NV_soDLA_slcg(1, false))
+    val u_slcg_cell_0 = Module(new NV_NVDLA_slcg(1, false))
     u_slcg_cell_0.io.nvdla_clock := io.nvdla_clock
     u_slcg_cell_0.io.slcg_en(0) := u_regfile.io.slcg_op_en(3) | u_assembly_ctrl.io.slcg_cell_en
     nvdla_cell_gated_clk := u_slcg_cell_0.io.nvdla_core_gated_clk  

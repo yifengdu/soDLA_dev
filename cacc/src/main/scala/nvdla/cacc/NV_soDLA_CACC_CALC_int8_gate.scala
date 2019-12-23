@@ -6,6 +6,7 @@ import chisel3.util._
 import chisel3.iotesters.Driver
 
 //this module is to process dat
+@chiselName
 class NV_soDLA_CACC_CALC_int8_gate extends Module {
 
     val io = IO(new Bundle {
@@ -49,7 +50,7 @@ class NV_soDLA_CACC_CALC_int8_gate extends Module {
 //           └─┐  ┐  ┌───────┬──┐  ┌──┘         
 //             │ ─┤ ─┤       │ ─┤ ─┤         
 //             └──┴──┘       └──┴──┘ 
-withClock(io.nvdla_core_clk, !io.nvdla_core_rstn){
+withClockAndReset(io.nvdla_core_clk, !io.nvdla_core_rstn){
     //====================
     // Addition
     //====================

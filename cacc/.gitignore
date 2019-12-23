@@ -13,6 +13,7 @@ test_run_dir/
 
 *.fir
 *.json
+.*.fir
 
 
 # These are decided not to be public. 

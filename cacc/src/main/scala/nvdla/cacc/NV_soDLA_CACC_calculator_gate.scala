@@ -5,7 +5,8 @@ import chisel3.experimental._
 import chisel3.util._
 
 //calculate accumulate data
-class NV_soDLA_CACC_calculator_gate(implicit conf: caccConfiguration) extends Module {
+@chiselName
+class NV_NVDLA_CACC_calculator_gate(implicit conf: caccConfiguration) extends Module {
 
     val io = IO(new Bundle {
         //clk
@@ -108,7 +109,7 @@ withClockAndReset(io.nvdla_core_clk, !io.nvdla_core_rstn){
     val calc_pout_sum = Wire(Vec(conf.CACC_ATOMK, UInt(conf.CACC_PARSUM_WIDTH.W)))
     val calc_fout_sum = Wire(Vec(conf.CACC_ATOMK, UInt(conf.CACC_FINAL_WIDTH.W)))
 
-    val u_cell_int8 = Array.fill(conf.CACC_ATOMK){Module(new NV_soDLA_CACC_CALC_int8)}
+    val u_cell_int8 = Array.fill(conf.CACC_ATOMK){Module(new NV_NVDLA_CACC_CALC_int8)}
 
     for(i <- 0 to conf.CACC_ATOMK-1){
         u_cell_int8(i).io.nvdla_core_clk := io.nvdla_cell_clk
@@ -230,8 +231,8 @@ withClockAndReset(io.nvdla_core_clk, !io.nvdla_core_rstn){
 }}
 
 
-object NV_soDLA_CACC_calculator_for_checkDriver extends App {
+object NV_NVDLA_CACC_calculator_gateDriver extends App {
   implicit val conf: nvdlaConfig = new nvdlaConfig
-  chisel3.Driver.execute(args, () => new NV_soDLA_CACC_calculator_for_check())
+  chisel3.Driver.execute(args, () => new NV_NVDLA_CACC_calculator_gate())
 }
 
