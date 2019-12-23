@@ -6,6 +6,7 @@ import chisel3.util._
 
 //calculate overflow
 //need 2d
+@chiselName
 class NV_soDLA_CACC_calculator_oc_gate(implicit val conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         //clock
