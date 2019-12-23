@@ -9,12 +9,12 @@ class NV_NVDLA_CSC_DL_IP_cfgTests(c: NV_NVDLA_CSC_DL_IP_cfg) extends PeekPokeTes
 
   for (t <- 0 until 100) {
     // set up status from sequential generator
-    val is_sg_idle = rnd.nextBoolean()
+    val is_sg_idle = true
     val is_sg_running = rnd.nextBoolean()
     val is_sg_done = rnd.nextBoolean()
 
     // set up reg2dp
-    val op_en = rnd.nextBoolean()
+    val op_en = true
     val conv_mode = rnd.nextBoolean()
     val batches = rnd.nextInt(1<<5)
     val proc_precision = rnd.nextInt(1<<2)
@@ -89,8 +89,8 @@ class NV_NVDLA_CSC_DL_IP_cfgTests(c: NV_NVDLA_CSC_DL_IP_cfg) extends PeekPokeTes
         batch_cmp_w = 0
     }
     
-    val datain_width_w = if(is_winograd) datain_width_ext/4 + 1 else datain_width_ext
-    val datain_width_cmp_w = datain_width_ext + 1
+    val datain_width_w = if(is_winograd) datain_width_ext/4 + 1 else datain_width_ext + 1
+    val datain_width_cmp_w = datain_width_ext
     val datain_height_cmp_w = datain_height_ext
     val datain_channel_cmp_w = if(is_winograd) weight_channel_ext/4 else weight_channel_ext/conf.MAC_ATOMIC_C_SIZE
     //y_ex=0,sub_h_total=1;y_ex=1,sub_h_total=2; y_ext=2,sub_h_total=4; non_image, sub_h_total=1;
@@ -136,7 +136,27 @@ class NV_NVDLA_CSC_DL_IP_cfgTests(c: NV_NVDLA_CSC_DL_IP_cfg) extends PeekPokeTes
     //test result
     expect(c.io.dataout_w_init, sub_h_cmp_w-1)
 
+    step(1)
+
     //after one delay
+    expect(c.io.subfield_d1.data_bank, data_bank_w)
+    expect(c.io.subfield_d1.datain_width, datain_width_w)
+    expect(c.io.subfield_d1.datain_width_cmp, datain_width_cmp_w)
+    expect(c.io.subfield_d1.datain_height_cmp, datain_height_cmp_w)
+    expect(c.io.subfield_d1.datain_channel_cmp, datain_channel_cmp_w)
+    expect(c.io.subfield_d1.sub_h_total_g0, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g1, sub_h_total_w)
+    //expect(c.io.subfield_d1.sub_h_total_g2, sub_h_total_w*2)
+    expect(c.io.subfield_d1.sub_h_total_g3, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g4, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g5, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g6, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g7, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g8, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g9, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g10, sub_h_total_w)
+    expect(c.io.subfield_d1.sub_h_total_g11, sub_h_total_w)
+
 
 
 

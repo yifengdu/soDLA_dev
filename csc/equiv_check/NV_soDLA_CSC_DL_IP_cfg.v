@@ -1186,7 +1186,7 @@ assign is_sg_running = (sc_state == 2 );
 assign is_sg_done = (sc_state == 3 );
 //: &eperl::flop("-nodeclare   -rval \"1'b0\"   -d \"is_sg_running\" -q is_sg_running_d1");
 //| eperl: generated_beg (DO NOT EDIT BELOW)
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        is_sg_running_d1 <= 1'b0;
    end else begin
@@ -1371,14 +1371,14 @@ assign pra_truncate_w = (reg2dp_pra_truncate == 2'h3) ? 2'h2 : reg2dp_pra_trunca
 //: &eperl::flop("-nodeclare   -rval \"{8{1'b0}}\"  -en \"layer_st\" -d \"{4{pra_truncate_w}}\" -q pra_truncate");
 //: &eperl::flop("-nodeclare   -rval \"{8{1'b0}}\"  -en \"layer_st\" -d \"{4{reg2dp_proc_precision}}\" -q pra_precision");
 //| eperl: generated_beg (DO NOT EDIT BELOW)
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        layer_st_d1 <= 1'b0;
    end else begin
        layer_st_d1 <= layer_st;
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        is_winograd_d1 <= {22{1'b0}};
    end else begin
@@ -1392,7 +1392,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        is_img_d1 <= {34{1'b0}};
    end else begin
@@ -1406,7 +1406,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        data_bank <= {5{1'b0}};
    end else begin
@@ -1420,7 +1420,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        datain_width <= {14{1'b0}};
    end else begin
@@ -1434,7 +1434,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        datain_width_cmp <= {13{1'b0}};
    end else begin
@@ -1448,7 +1448,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        datain_height_cmp <= {13{1'b0}};
    end else begin
@@ -1462,7 +1462,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        datain_channel_cmp <= {11{1'b0}};
    end else begin
@@ -1476,7 +1476,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g0 <= 3'h1;
    end else begin
@@ -1490,7 +1490,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g1 <= 3'h1;
    end else begin
@@ -1504,7 +1504,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g2 <= 2'h1;
    end else begin
@@ -1518,7 +1518,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g3 <= 3'h1;
    end else begin
@@ -1532,7 +1532,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g4 <= 3'h1;
    end else begin
@@ -1546,7 +1546,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g5 <= 3'h1;
    end else begin
@@ -1560,7 +1560,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g6 <= 3'h1;
    end else begin
@@ -1574,7 +1574,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g7 <= 3'h1;
    end else begin
@@ -1588,7 +1588,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g8 <= 3'h1;
    end else begin
@@ -1602,7 +1602,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g9 <= 3'h1;
    end else begin
@@ -1616,7 +1616,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g10 <= 3'h1;
    end else begin
@@ -1630,7 +1630,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_total_g11 <= 3'h1;
    end else begin
@@ -1644,7 +1644,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_cmp_g0 <= 3'h1;
    end else begin
@@ -1658,7 +1658,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        sub_h_cmp_g1 <= 3'h1;
    end else begin
@@ -1672,7 +1672,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        conv_x_stride <= {4{1'b0}};
    end else begin
@@ -1686,7 +1686,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        conv_y_stride <= {4{1'b0}};
    end else begin
@@ -1700,7 +1700,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pixel_x_stride_odd <= 1'b0;
    end else begin
@@ -1714,7 +1714,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        data_batch <= {6{1'b0}};
    end else begin
@@ -1728,7 +1728,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        batch_cmp <= {5{1'b0}};
    end else begin
@@ -1742,7 +1742,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pixel_x_init <= {6{1'b0}};
    end else begin
@@ -1756,7 +1756,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pixel_x_init_offset <= {7{1'b0}};
    end else begin
@@ -1770,7 +1770,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pixel_x_add <= {7{1'b0}};
    end else begin
@@ -1784,7 +1784,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pixel_x_byte_stride <= {7{1'b0}};
    end else begin
@@ -1798,7 +1798,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pixel_ch_stride <= {12{1'b0}};
    end else begin
@@ -1812,7 +1812,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        x_dilate <= {6{1'b0}};
    end else begin
@@ -1826,7 +1826,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        y_dilate <= {6{1'b0}};
    end else begin
@@ -1840,7 +1840,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pad_value <= {16{1'b0}};
    end else begin
@@ -1854,7 +1854,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        entries <= {15{1'b0}};
    end else begin
@@ -1868,7 +1868,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        entries_batch <= {15{1'b0}};
    end else begin
@@ -1882,7 +1882,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        entries_cmp <= {15{1'b0}};
    end else begin
@@ -1896,7 +1896,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        h_offset_slice <= {14{1'b0}};
    end else begin
@@ -1910,7 +1910,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        h_bias_0_stride <= {12{1'b0}};
    end else begin
@@ -1924,7 +1924,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        h_bias_1_stride <= {12{1'b0}};
    end else begin
@@ -1938,7 +1938,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        h_bias_2_stride <= {13{1'b0}};
    end else begin
@@ -1952,7 +1952,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        h_bias_3_stride <= {13{1'b0}};
    end else begin
@@ -1966,7 +1966,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        rls_slices <= {14{1'b0}};
    end else begin
@@ -1980,7 +1980,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        rls_entries <= {15{1'b0}};
    end else begin
@@ -1994,7 +1994,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        slice_left <= {14{1'b0}};
    end else begin
@@ -2008,7 +2008,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        last_slices <= {14{1'b0}};
    end else begin
@@ -2022,7 +2022,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        last_entries <= {15{1'b0}};
    end else begin
@@ -2036,7 +2036,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        dataout_width_cmp <= {13{1'b0}};
    end else begin
@@ -2050,7 +2050,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pra_truncate <= {8{1'b0}};
    end else begin
@@ -2064,7 +2064,7 @@ always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
        end
    end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
    if (!nvdla_core_rstn) begin
        pra_precision <= {8{1'b0}};
    end else begin
