@@ -18,6 +18,7 @@ class NV_soDLA_CACC_calculator_oc_gate(implicit val conf: nvdlaConfig) extends M
         val calc_stripe_end_out = Input(Bool())
         val calc_dlv_valid_out = Input(Bool())
 
+
         val dp2reg_sat_count = Output(UInt(32.W))
  
     })
@@ -43,8 +44,9 @@ withClockAndReset(io.nvdla_core_clk, !io.nvdla_core_rstn){
     val sat_count = RegInit("b0".asUInt(32.W))
     val sat_count_inc = (sat_count +& sat_sum)(31, 0)
     val sat_carry = (sat_count +& sat_sum)(32)
-    val sat_count_w = Mux(dlv_sat_clr_d1, sat_sum,
-                      Mux(sat_carry, Fill(32, true.B), sat_count_inc))
+    val sat_count_w = Wire(UInt(32.W))
+    sat_count_w := Mux(dlv_sat_clr_d1, sat_sum,
+                   Mux(sat_carry, Fill(32, true.B), sat_count_inc))
     val sat_reg_en = dlv_sat_vld_d1 & ((sat_sum.orR) | dlv_sat_clr_d1);
     when(sat_reg_en){
         sat_count := sat_count_w

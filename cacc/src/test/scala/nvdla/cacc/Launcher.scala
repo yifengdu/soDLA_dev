@@ -9,6 +9,13 @@ import utils.TutorialRunner
 object caccLauncher{  
   implicit val conf: nvdlaConfig = new nvdlaConfig
   val cacc = Map(
+
+      "NV_NVDLA_CACC_calculator_oc" -> { 
+        (manager: TesterOptionsManager) =>
+        Driver.execute(() => new NV_NVDLA_CACC_calculator_oc(), manager) {
+          (c) => new NV_NVDLA_CACC_calculator_ocTests(c)
+        }
+      } 
   
 
   )
