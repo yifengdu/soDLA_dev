@@ -1,6 +1,10 @@
 module NV_soDLA_CACC_delivery_ctrl_gate( // @[:@3.2]
   input           nvdla_core_clk, // @[:@6.4]
   input           nvdla_core_rstn, // @[:@6.4]
+
+  input           cacc2sdp_valid, // add for check
+  input           cacc2sdp_ready, // add for check
+
   input           dbuf_rd_ready, // @[:@6.4]
   output          dbuf_rd_en, // @[:@6.4]
   output [5:0]    dbuf_rd_addr, // @[:@6.4]
