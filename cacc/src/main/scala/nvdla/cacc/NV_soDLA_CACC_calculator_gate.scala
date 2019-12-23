@@ -6,7 +6,7 @@ import chisel3.util._
 
 //calculate accumulate data
 @chiselName
-class NV_NVDLA_CACC_calculator_gate(implicit conf: caccConfiguration) extends Module {
+class NV_soDLA_CACC_calculator_gate(implicit conf: caccConfiguration) extends Module {
 
     val io = IO(new Bundle {
         //clk
@@ -25,7 +25,8 @@ class NV_NVDLA_CACC_calculator_gate(implicit conf: caccConfiguration) extends Mo
         val dlv_pd = Output(UInt(2.W))  
 
         //control
-        val accu_ctrl_pd = Flipped(ValidIO(UInt(13.W)))
+        val accu_ctrl_valid = Input(Bool())
+        val accu_ctrl_pd = Input(UInt(13.W))
         val accu_ctrl_ram_valid = Input(Bool())
 
         //cfg
@@ -71,7 +72,7 @@ withClockAndReset(io.nvdla_core_clk, !io.nvdla_core_rstn){
     val abuf_in_data = VecInit((0 to conf.CACC_ATOMK-1) 
                         map { i => io.abuf_rd_data(conf.CACC_PARSUM_WIDTH*(i+1)-1, conf.CACC_PARSUM_WIDTH*i)})
     //1T delay, the same T with data/mask
-    val accu_ctrl_pd_d1 = RegEnable(io.accu_ctrl_pd.bits, "b0".asUInt(13.W), io.accu_ctrl_pd.valid)
+    val accu_ctrl_pd_d1 = RegEnable(io.accu_ctrl_pd, "b0".asUInt(13.W), io.accu_ctrl_valid)
     val calc_valid_in = (io.mac_b2accu_pvld | io.mac_a2accu_pvld)
 
     val calc_valid = ShiftRegister(calc_valid_in, 3)
@@ -231,8 +232,8 @@ withClockAndReset(io.nvdla_core_clk, !io.nvdla_core_rstn){
 }}
 
 
-object NV_NVDLA_CACC_calculator_gateDriver extends App {
+object NV_soDLA_CACC_calculator_gateDriver extends App {
   implicit val conf: nvdlaConfig = new nvdlaConfig
-  chisel3.Driver.execute(args, () => new NV_NVDLA_CACC_calculator_gate())
+  chisel3.Driver.execute(args, () => new NV_soDLA_CACC_calculator_gate())
 }
 
