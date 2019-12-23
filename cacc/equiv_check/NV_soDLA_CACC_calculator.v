@@ -3173,7 +3173,7 @@ module NV_NVDLA_CACC_calculator (
 ,mac_a2accu_data15 //|< i 
 //| eperl: generated_end (DO NOT EDIT ABOVE)
   ,mac_a2accu_mask //|< i
-  ,mac_a2accu_mode //|< i
+  , //|< i
   ,mac_a2accu_pvld //|< i
 //: for(my $i=0; $i<32/2 ; $i++){
 //: print qq(
@@ -3199,7 +3199,6 @@ module NV_NVDLA_CACC_calculator (
 ,mac_b2accu_data15 //|< i 
 //| eperl: generated_end (DO NOT EDIT ABOVE)
   ,mac_b2accu_mask //|< i
-  ,mac_b2accu_mode //|< i
   ,mac_b2accu_pvld //|< i
   ,nvdla_cell_clk //|< i
   ,abuf_wr_addr //|> o
@@ -3243,7 +3242,6 @@ input [22 -1:0] mac_a2accu_data14;
 input [22 -1:0] mac_a2accu_data15; 
 //| eperl: generated_end (DO NOT EDIT ABOVE)
 input [32/2-1:0] mac_a2accu_mask;
-input mac_a2accu_mode;
 input mac_a2accu_pvld;
 //: for(my $i=0; $i<32/2 ; $i++){
 //: print qq(
@@ -3269,7 +3267,6 @@ input [22 -1:0] mac_b2accu_data14;
 input [22 -1:0] mac_b2accu_data15; 
 //| eperl: generated_end (DO NOT EDIT ABOVE)
 input [32/2-1:0] mac_b2accu_mask;
-input mac_b2accu_mode;
 input mac_b2accu_pvld;
 output [5 +1 -1:0] abuf_wr_addr;
 output [34*32 -1:0] abuf_wr_data;
