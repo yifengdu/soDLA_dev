@@ -3173,7 +3173,6 @@ module NV_NVDLA_CACC_calculator (
 ,mac_a2accu_data15 //|< i 
 //| eperl: generated_end (DO NOT EDIT ABOVE)
   ,mac_a2accu_mask //|< i
-  , //|< i
   ,mac_a2accu_pvld //|< i
 //: for(my $i=0; $i<32/2 ; $i++){
 //: print qq(
