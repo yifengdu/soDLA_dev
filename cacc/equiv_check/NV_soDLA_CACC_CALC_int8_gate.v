@@ -327,14 +327,14 @@ assign in_mask_op = in_op_valid ? in_op[33:0] : 34'b0;
 assign di_pd = in_data[21:0];
 assign oi_pd = in_mask_op[33:0];
 
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
   if (!nvdla_core_rstn) begin
     i_sat_vld <= 1'b0;
   end else begin
   i_sat_vld <= i_vld;
   end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
   if (!nvdla_core_rstn) begin
     i_sat_sel <= 1'b0;
   end else begin
@@ -407,7 +407,7 @@ assign i_partial_vld = i_sat_vld & ~i_sat_sel;
 assign i_final_vld = i_sat_vld & i_sat_sel;
 
 //====================
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
   if (!nvdla_core_rstn) begin
     out_partial_valid <= 1'b0;
   end else begin
@@ -428,14 +428,14 @@ always @(posedge nvdla_core_clk) begin
 end
 // spyglass enable_block STARC05-3.3.1.4b
 
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
   if (!nvdla_core_rstn) begin
     out_final_valid <= 1'b0;
   end else begin
   out_final_valid <= i_final_vld;
   end
 end
-always @(posedge nvdla_core_clk or negedge nvdla_core_rstn) begin
+always @(posedge nvdla_core_clk) begin
   if (!nvdla_core_rstn) begin
     out_final_sat <= 1'b0;
   end else begin
