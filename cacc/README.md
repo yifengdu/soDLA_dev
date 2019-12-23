@@ -1,7 +1,7 @@
 cacc
 ================
 
-CACC_CALC_int8  passed
+CACC_CALC_int8  passed equivalent checking from yosys.
 
 
 
