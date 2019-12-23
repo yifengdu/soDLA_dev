@@ -110,10 +110,11 @@ withClockAndReset(io.nvdla_core_clk, !io.nvdla_core_rstn){
     val calc_pout_sum = Wire(Vec(conf.CACC_ATOMK, UInt(conf.CACC_PARSUM_WIDTH.W)))
     val calc_fout_sum = Wire(Vec(conf.CACC_ATOMK, UInt(conf.CACC_FINAL_WIDTH.W)))
 
-    val u_cell_int8 = Array.fill(conf.CACC_ATOMK){Module(new NV_NVDLA_CACC_CALC_int8)}
+    val u_cell_int8 = Array.fill(conf.CACC_ATOMK){Module(new NV_soDLA_CACC_CALC_int8_gate)}
 
     for(i <- 0 to conf.CACC_ATOMK-1){
         u_cell_int8(i).io.nvdla_core_clk := io.nvdla_cell_clk
+        u_cell_int8(i).io.nvdla_core_rstn := io.nvdla_core_rstn
         u_cell_int8(i).io.cfg_truncate := io.cfg_truncate
         u_cell_int8(i).io.in_data := calc_op0(i)
         u_cell_int8(i).io.in_op := calc_op1(i)
