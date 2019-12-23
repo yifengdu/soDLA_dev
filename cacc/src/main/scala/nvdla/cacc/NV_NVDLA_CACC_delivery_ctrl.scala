@@ -6,7 +6,7 @@ import chisel3.util._
 
 //this module is to process dat
 
-class NV_NVDLA_CACC_delivery_ctrl(implicit conf: caccConfiguration) extends Module {
+class NV_NVDLA_CACC_delivery_ctrl(implicit val conf: nvdlaConfig) extends Module {
 
     val io = IO(new Bundle {
         //clk

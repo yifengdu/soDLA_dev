@@ -5,7 +5,7 @@ import chisel3.experimental._
 import chisel3.util._
 
 //calculate accumulate data
-class NV_NVDLA_CACC_calculator(implicit conf: caccConfiguration) extends Module {
+class NV_NVDLA_CACC_calculator(implicit val conf: nvdlaConfig) extends Module {
 
     val io = IO(new Bundle {
         //clk
@@ -217,8 +217,9 @@ withClock(io.nvdla_core_clk){
     val sat_count = RegInit("b0".asUInt(32.W))
     val sat_count_inc = (sat_count +& sat_sum)(31, 0)
     val sat_carry = (sat_count +& sat_sum)(32)
-    val sat_count_w = Mux(dlv_sat_clr_d1, sat_sum,
-                      Mux(sat_carry, Fill(32, true.B), sat_count_inc))
+    val sat_count_w = Wire(UInt(32.W))
+    sat_count_w := Mux(dlv_sat_clr_d1, sat_sum,
+                   Mux(sat_carry, Fill(32, true.B), sat_count_inc))
     val sat_reg_en = dlv_sat_vld_d1 & ((sat_sum.orR) | dlv_sat_clr_d1);
     when(sat_reg_en){
         sat_count := sat_count_w
