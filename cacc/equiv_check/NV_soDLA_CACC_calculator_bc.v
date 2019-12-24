@@ -551,7 +551,7 @@ endmodule
 
 
 
-module NV_soDLA_CACC_calculator_bc_gate( // @[:@3.2]
+module NV_NVDLA_CACC_calculator_bc( // @[:@3.2]
   input           nvdla_core_clk, // @[:@6.4]
   input           nvdla_core_rstn, // @[:@6.4]
   input           calc_wr_en, // @[:@6.4]
