@@ -22,7 +22,7 @@ class NV_NVDLA_CACC_delivery_ctrl(implicit val conf: nvdlaConfig) extends Module
         val dp2reg_done = Output(Bool())
 
         //dlv
-        val dlv_data = Input(Vec(conf.CACC_ATOMK, UInt(conf.CACC_FINAL_WIDTH.W)))
+        val dlv_data = Input(UInt((conf.CACC_ATOMK*conf.CACC_FINAL_WIDTH).W))
         val dlv_mask = Input(Bool())
         val dlv_pd = Input(UInt(2.W))
         val dlv_valid = Input(Bool())
@@ -74,7 +74,7 @@ dbuf_wr_en_out := io.dlv_valid
 when(io.dlv_valid){
     dbuf_wr_addr_pre := dbuf_wr_addr_w
     dbuf_wr_addr_out := dbuf_wr_addr_pre
-    dbuf_wr_data_out := io.dlv_data.asUInt
+    dbuf_wr_data_out := io.dlv_data
 }
 
 io.dbuf_wr.addr.valid := dbuf_wr_en_out

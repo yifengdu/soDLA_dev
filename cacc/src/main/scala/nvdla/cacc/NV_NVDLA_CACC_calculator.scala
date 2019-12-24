@@ -19,7 +19,7 @@ class NV_NVDLA_CACC_calculator(implicit val conf: nvdlaConfig) extends Module {
         //dlv buf
         val dlv_valid = Output(Bool())
         val dlv_mask = Output(Bool()) 
-        val dlv_data = Output(Vec(conf.CACC_ATOMK, UInt(conf.CACC_FINAL_WIDTH.W)))
+        val dlv_data = Output(UInt((conf.CACC_ATOMK*conf.CACC_FINAL_WIDTH).W))
         val dlv_pd = Output(UInt(2.W))  
 
         //control

@@ -11,6 +11,8 @@ class NV_NVDLA_CACC_calculator_oc(useRealClock:Boolean = false)(implicit val con
         //clock
         val nvdla_core_clk = Input(Clock())
 
+        
+
         val calc_fout_sat = Input(Vec(conf.CACC_ATOMK, Bool()))
         val calc_layer_end_out = Input(Bool())
         val calc_stripe_end_out = Input(Bool())
