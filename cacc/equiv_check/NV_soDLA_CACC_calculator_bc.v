@@ -771,7 +771,7 @@ wire [34*32 -1:0] abuf_wr_data_w;
 //: assign abuf_wr_data_w[34*($i+1)-1:34*$i] = calc_pout_${i}; );
 //: }
 //: &eperl::flop(" -q  abuf_wr_en  -d \"calc_wr_en\" -clk nvdla_core_clk -rst nvdla_core_rstn -rval 0");
-//: &eperl::flop("-wid ${jj} -q  abuf_wr_addr  -en \"calc_wr_en\" -d  \"calc_addr_out[${jj}-1:0]\" -clk nvdla_core_clk -rst nvdla_core_rstn -rval 0");
+//: &eperl::flop("-wid ${jj} -q  abuf_wr_addr  -en \"calc_wr_en\" -d  \"calc_addr[${jj}-1:0]\" -clk nvdla_core_clk -rst nvdla_core_rstn -rval 0");
 //: &eperl::flop("-wid ${kk} -q  abuf_wr_data  -en \"calc_wr_en\" -d  \"abuf_wr_data_w\" -clk nvdla_core_clk -norst");
 //| eperl: generated_beg (DO NOT EDIT BELOW)
 
@@ -820,7 +820,7 @@ always @(posedge nvdla_core_clk) begin
        abuf_wr_addr <= 'b0;
    end else begin
        if ((calc_wr_en) == 1'b1) begin
-           abuf_wr_addr <= calc_addr_out[6-1:0];
+           abuf_wr_addr <= calc_addr[6-1:0];
        // VCS coverage off
        end else if ((calc_wr_en) == 1'b0) begin
        end else begin
