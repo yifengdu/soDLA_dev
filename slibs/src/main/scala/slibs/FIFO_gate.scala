@@ -383,3 +383,9 @@ object NV_NVDLA_CSC_SG_dat_fifoDriver extends App {
                                         ram_type = 1, distant_wr_req = true,
                                         io_wr_empty = true ))
 }
+
+
+object NV_NVDLA_zero_depthDriver extends App {
+  implicit val conf: nvdlaConfig = new nvdlaConfig
+  chisel3.Driver.execute(args, () => new NV_NVDLA_fifo_gate(depth = 0, width = 1))
+}
