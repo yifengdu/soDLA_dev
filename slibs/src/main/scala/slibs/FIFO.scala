@@ -11,7 +11,7 @@ class NV_NVDLA_fifo(depth: Int, width: Int,
                     io_wr_empty: Boolean = false, 
                     io_wr_idle: Boolean = false,
                     io_wr_count: Boolean = false,
-                    io_rd_idle: Boolean = false)(implicit val conf: nvdlaConfig) extends Module {
+                    io_rd_idle: Boolean = false) extends Module {
     val io = IO(new Bundle {
         //clk
         val clk = Input(Clock())
@@ -294,8 +294,8 @@ class NV_NVDLA_fifo(depth: Int, width: Int,
         val rd_pvld_int = if((ram_type == 0)|(ram_type == 2)) Some(withClock(clk_mgated){RegInit(false.B)}) 
                           else None // internal copy of rd_req
         val rd_count = withClock(clk_mgated){RegInit("b0".asUInt(log2Ceil(depth+1).W))}
-        val rd_count_next_rd_popping = Mux(rd_pushing, rd_count, rd_count-1.U)
-        val rd_count_next_no_rd_popping = Mux(rd_pushing, rd_count + 1.U, rd_count)
+        val rd_count_next_rd_popping = Mux(rd_pushing, rd_count, rd_count -& 1.U)
+        val rd_count_next_no_rd_popping = Mux(rd_pushing, rd_count +& 1.U, rd_count)
         val rd_count_next = Mux(rd_popping, rd_count_next_rd_popping, rd_count_next_no_rd_popping)
         when(rd_pushing || rd_popping){
             rd_count := rd_count_next
@@ -325,7 +325,7 @@ class NV_NVDLA_fifo(depth: Int, width: Int,
         }
 
         if(ram_type == 2){
-            rd_popping := io.rd_pvld && io.rd_prdy
+            rd_popping := rd_pvld_p && !(rd_pvld_int.get && !io.rd_prdy)
 
             val rd_count_p_next_rd_popping_not_0 = rd_count_next_rd_popping =/= 0.U
             val rd_count_p_next_no_rd_popping_not_0 = rd_count_next_no_rd_popping =/= 0.U

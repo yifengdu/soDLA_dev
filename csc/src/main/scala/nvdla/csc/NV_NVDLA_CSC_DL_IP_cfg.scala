@@ -89,7 +89,7 @@ class NV_NVDLA_CSC_dl_subfield_sg_done_if(implicit val conf: nvdlaConfig) extend
     val last_entries = Output(UInt(conf.CSC_ENTRIES_NUM_WIDTH.W))
 }
 
-class NV_NVDLA_CSC_DL_IP_cfg(useRealClock:Boolean = false)(implicit val conf: nvdlaConfig) extends Module {
+class NV_NVDLA_CSC_DL_IP_cfg(implicit val conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         //clock
         val nvdla_core_clk = Input(Clock())
@@ -132,11 +132,7 @@ class NV_NVDLA_CSC_DL_IP_cfg(useRealClock:Boolean = false)(implicit val conf: nv
 //                          MAC                    
 //
 /////////////////////////////////////////////////////////////////////////////////////////////
-val internal_clock = if(useRealClock) io.nvdla_core_clk else clock  
-
-            
-class ipImpl{
-
+withClock(io.nvdla_core_clk){
 //////////////////////////////////////////////////////////////
 ///// input signals from registers                       /////
 //////////////////////////////////////////////////////////////
@@ -260,11 +256,7 @@ io.subfield_d2.rls_entries := RegEnable(slice_entries_w, "b0".asUInt(conf.CSC_EN
 io.subfield_sg_done.last_slices := RegEnable(io.subfield_d1.slice_left, "b0".asUInt(14.W), io.is_sg_done)
 io.subfield_sg_done.last_entries := RegEnable(slice_entries_w, "b0".asUInt(conf.CSC_ENTRIES_NUM_WIDTH.W), io.is_sg_done)
 
-}
-
-val ip = withClock(internal_clock){new ipImpl} 
-
-}
+}}
 
 
 object NV_NVDLA_CSC_DL_IP_cfgDriver extends App {

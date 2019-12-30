@@ -8,7 +8,7 @@ import chisel3.experimental._
 // Flop-Based RAM (with asynchronous wr_reg)
 //
 
-class nv_flopram(dep: Int, wid: Int, wr_reg: Boolean = false)(implicit val conf: nvdlaConfig) extends Module{
+class nv_flopram(dep: Int, wid: Int, wr_reg: Boolean = false) extends Module{
   val io = IO(new Bundle{
         val clk = Input(Clock())  
         val clk_mgated = if(wr_reg) Some(Input(Clock())) else None
@@ -45,12 +45,12 @@ class nv_flopram(dep: Int, wid: Int, wr_reg: Boolean = false)(implicit val conf:
 //             │ ─┤ ─┤       │ ─┤ ─┤         
 //             └──┴──┘       └──┴──┘ 
 
-if(!conf.FPGA){
-    val UJ_BBOX2UNIT_UNUSED_pwrbus = Array.fill(32){Module(new NV_BLKBOX_SINK)}
-    for(i <- 0 to 31){
-        UJ_BBOX2UNIT_UNUSED_pwrbus(i).io.A := io.pwrbus_ram_pd(i)
-    }
-}
+// if(!conf.FPGA){
+//     val UJ_BBOX2UNIT_UNUSED_pwrbus = Array.fill(32){Module(new NV_BLKBOX_SINK)}
+//     for(i <- 0 to 31){
+//         UJ_BBOX2UNIT_UNUSED_pwrbus(i).io.A := io.pwrbus_ram_pd(i)
+//     }
+// }
 
 val di_d = if(wr_reg) withClock(io.clk){RegEnable(io.di, io.iwe.get)} // -wr_reg
             else io.di
@@ -84,6 +84,6 @@ withClock(internal_clk){
 
 
 object NV_NVDLA_CSC_SG_dat_fifo_flopram_rwsa_4x33 extends App {
-  implicit val conf: nvdlaConfig = new nvdlaConfig
+//   implicit val conf: nvdlaConfig = new nvdlaConfig
   chisel3.Driver.execute(args, () => new nv_flopram(dep = 4, wid = 33, wr_reg = true))
 }

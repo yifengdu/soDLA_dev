@@ -5,7 +5,7 @@ import chisel3.experimental._
 import chisel3.util._
 
 
-class NV_NVDLA_CSC_DL_CBUF_mng(useRealClock:Boolean = false)(implicit val conf: nvdlaConfig) extends Module {
+class NV_NVDLA_CSC_DL_CBUF_mng(implicit val conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         //clock
         val nvdla_core_ng_clk = Input(Clock())
@@ -45,10 +45,7 @@ class NV_NVDLA_CSC_DL_CBUF_mng(useRealClock:Boolean = false)(implicit val conf: 
 //                          MAC                    
 //
 /////////////////////////////////////////////////////////////////////////////////////////////
-val manage_clock = if(useRealClock) io.nvdla_core_ng_clk else clock  
-
-class mngImpl{
-
+withClock(io.nvdla_core_ng_clk){
     /////////////////////////////////////////////////////////////
     ///// cbuf status management                             /////
     //////////////////////////////////////////////////////////////
@@ -92,12 +89,10 @@ class mngImpl{
     //================  Non-SLCG clock domain end ================//
 }
 
-    val cbuf_mng = withClock(manage_clock){new mngImpl} 
-
 }
 
 
-class NV_NVDLA_CSC_DL_CBUF_updt(useRealClock:Boolean = false)(implicit val conf: nvdlaConfig) extends Module {
+class NV_NVDLA_CSC_DL_CBUF_updt(implicit val conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         //clock
         val nvdla_core_clk = Input(Clock())
@@ -142,10 +137,7 @@ class NV_NVDLA_CSC_DL_CBUF_updt(useRealClock:Boolean = false)(implicit val conf:
 //                          MAC                    
 //
 ///////////////////////////////////////////////////////////////////////////////////////////// 
-val updt_clock = if(useRealClock) io.nvdla_core_clk else clock 
-
-class updtImpl{
-
+withClock(io.nvdla_core_clk){
 //////////////////////////////////////////////////////////////
 ///// cbuf status update                                 /////
 //////////////////////////////////////////////////////////////
@@ -160,15 +152,11 @@ io.sc2cdma_dat_updt.valid := RegNext(io.dat_rls, false.B)
 io.sc2cdma_dat_updt.bits.slices := RegEnable(io.sc2cdma_dat_slices_w, "b0".asUInt(14.W), io.dat_rls)
 io.sc2cdma_dat_updt.bits.entries := RegEnable(io.sc2cdma_dat_entries_w, "b0".asUInt(conf.CSC_ENTRIES_NUM_WIDTH.W), io.dat_rls)
 
-}
-
-val cbuf_updt = withClock(updt_clock){new updtImpl} 
-
-}
+}}
 
 
 
-class NV_NVDLA_CSC_DL_cbuf(useRealClock:Boolean = false)(implicit val conf: nvdlaConfig) extends Module {
+class NV_NVDLA_CSC_DL_cbuf(implicit val conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         //clock
         val nvdla_core_clk = Input(Clock())
@@ -214,14 +202,11 @@ class NV_NVDLA_CSC_DL_cbuf(useRealClock:Boolean = false)(implicit val conf: nvdl
 //                          MAC                    
 //
 ///////////////////////////////////////////////////////////////////////////////////////////// 
-val mng_clock = if(useRealClock) io.nvdla_core_ng_clk else clock
-val updt_clock = if(useRealClock) io.nvdla_core_clk else clock
-
 val u_cbuf_mng = Module(new NV_NVDLA_CSC_DL_CBUF_mng)
 val u_cbuf_updt = Module(new NV_NVDLA_CSC_DL_CBUF_updt)
 
-u_cbuf_mng.io.nvdla_core_ng_clk := mng_clock
-u_cbuf_updt.io.nvdla_core_clk := updt_clock
+u_cbuf_mng.io.nvdla_core_ng_clk := io.nvdla_core_ng_clk
+u_cbuf_updt.io.nvdla_core_clk := io.nvdla_core_clk
 
 u_cbuf_mng.io.cdma2sc_dat_updt <> io.cdma2sc_dat_updt
 u_cbuf_mng.io.sc2cdma_dat_pending_req := io.sc2cdma_dat_pending_req
