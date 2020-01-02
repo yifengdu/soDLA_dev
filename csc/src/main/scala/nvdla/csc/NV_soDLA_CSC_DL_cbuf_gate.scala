@@ -31,14 +31,14 @@ class NV_soDLA_CSC_DL_CBUF_mng_gate(implicit val conf: nvdlaConfig) extends Modu
         val is_sg_running_d1 = Input(Bool())
         val data_bank = Input(UInt(5.W))
 
-        val dat_slice_av1 = Output(UInt(14.W))
+        val dat_slice_avl = Output(UInt(14.W))
         val dat_entry_avl = Output(UInt(conf.CSC_ENTRIES_NUM_WIDTH.W))
         val dat_entry_st = Output(UInt(conf.CSC_ENTRIES_NUM_WIDTH.W))
         val dat_entry_end = Output(UInt(conf.CSC_ENTRIES_NUM_WIDTH.W))
 
     })
 /////////////////////////////////////////////////////////////////////////////////////////////
-// Pipeline of Weight loader, for both compressed weight and uncompressed weight
+// Pipeline of Weight loader, for bothl compressed weight and uncompressed weight
 //
 //                      input_package 
 //                           |                     
@@ -98,7 +98,7 @@ withClockAndReset(io.nvdla_core_ng_clk, !io.nvdla_core_rstn){
     when(io.cdma2sc_dat_updt|cbuf_reset){ dat_entry_end_reg := dat_entry_end_w }
     //================  Non-SLCG clock domain end ================//
 
-    io.dat_slice_av1 := dat_slice_avl_reg
+    io.dat_slice_avl := dat_slice_avl_reg
     io.dat_entry_avl := dat_entry_avl_reg
     io.dat_entry_st := dat_entry_st_reg
     io.dat_entry_end := dat_entry_end_reg

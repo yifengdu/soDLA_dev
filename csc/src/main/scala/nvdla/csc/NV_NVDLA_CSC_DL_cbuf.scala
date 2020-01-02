@@ -248,13 +248,7 @@ object NV_NVDLA_CSC_DL_CBUF_updtDriver extends App {
   chisel3.Driver.execute(args, () => new NV_NVDLA_CSC_DL_CBUF_updt)
 }
 
-object NV_NVDLA_CSC_DL_cbufDriver extends App {
-  implicit val conf: nvdlaConfig = new nvdlaConfig
-  chisel3.Driver.execute(args, () => new NV_NVDLA_CSC_DL_cbuf)
-}
 
-
-    
 
 
 
