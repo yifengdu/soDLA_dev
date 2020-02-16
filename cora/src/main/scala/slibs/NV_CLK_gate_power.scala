@@ -23,3 +23,4 @@ class NV_CLK_gate_power extends Module {
     
 }
 
+

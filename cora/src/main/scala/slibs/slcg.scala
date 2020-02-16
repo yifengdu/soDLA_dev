@@ -37,5 +37,3 @@ withClock(io.nvdla_clock.nvdla_core_clk){
     nvdla_core_clk_slcg.io.clk_en := nvdla_core_clk_slcg_en
     io.nvdla_core_gated_clk := nvdla_core_clk_slcg.io.clk_gated
 }}
-
-
