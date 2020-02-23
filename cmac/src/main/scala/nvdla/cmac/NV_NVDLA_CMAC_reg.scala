@@ -136,7 +136,7 @@ withClock(internal_clock){
     reg2dp_op_en_reg := Mux(io.dp2reg_done, "b0".asUInt(3.W), Cat(reg2dp_op_en_reg(1,0), reg2dp_op_en_ori))
     io.reg2dp_op_en := reg2dp_op_en_reg(2)
 
-    io.slcg_op_en := ShiftRegister(Fill(11, reg2dp_op_en_ori), 3)
+    io.slcg_op_en := ShiftRegister(Fill(11, reg2dp_op_en_ori), 3, "b0".asUInt(conf.CMAC_SLCG_NUM.W), true.B)
     ////////////////////////////////////////////////////////////////////////
     //                                                                    //
     // GENERATE ACCESS LOGIC TO EACH REGISTER GROUP                       //
@@ -178,3 +178,8 @@ withClock(internal_clock){
     io.reg2dp_field := Mux(dp2reg_consumer, reg2dp_d1_field, reg2dp_d0_field)
 
 }}
+
+object NV_NVDLA_CMAC_regDriver extends App {
+  implicit val conf: nvdlaConfig = new nvdlaConfig
+  chisel3.Driver.execute(args, () => new NV_NVDLA_CMAC_reg)
+}

@@ -3,7 +3,7 @@ package nvdla
 import chisel3._
 import chisel3.experimental._
 
-class NV_NVDLA_slcg(input_num: Int = 1, io_slcg_disable: Boolean = false) extends Module {
+class NV_NVDLA_slcg(input_num: Int = 1, io_slcg_disable: Boolean = false)(implicit conf: nvdlaConfig) extends Module {
    val io = IO(new Bundle {
         //in clock
         val nvdla_clock = Flipped(new nvdla_clock_if)
