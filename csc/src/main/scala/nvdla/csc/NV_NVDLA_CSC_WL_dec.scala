@@ -4,17 +4,29 @@
  import chisel3.experimental._
  import chisel3.util._
 
+class csc_wl_dec_goldinput_if(implicit val conf: nvdlaConfig) extends Bundle{
+    val mask = Output(UInt(conf.CSC_ATOMC.W))
+    val data = Output(UInt((conf.CSC_ATOMC*conf.CSC_BPE).W))
+    val sel = Output(UInt(conf.CSC_ATOMK.W))
+}
+
+class csc_wl_dec_goldoutput_if(implicit val conf: nvdlaConfig) extends Bundle{
+    val mask = Output(UInt(conf.CSC_ATOMC.W))
+    val data = Output(Vec(conf.CSC_ATOMC, UInt(conf.CSC_BPE.W)))
+    val sel = Output(UInt(conf.CSC_ATOMK.W))
+}
+
 class NV_NVDLA_CSC_WL_dec(implicit val conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         //clock
         val nvdla_core_clk = Input(Clock()) 
 
         //input 
-        val input = Flipped(ValidIO(new csc_wl_dec_if))
+        val input = Flipped(ValidIO(new csc_wl_dec_goldinput_if))
         val input_mask_en = Input(UInt(10.W))
 
         //output
-        val output = ValidIO(new csc_wl_dec_if) 
+        val output = ValidIO(new csc_wl_dec_goldoutput_if) 
 
     })
     //     
@@ -51,9 +63,20 @@ withClock(io.nvdla_core_clk){
     //                                   output_data  output_sel
     //
     /////////////////////////////////////////////////////////////////////////////////////////////
-
+    val input_mask_vec = Wire(Vec(conf.CSC_ATOMC, Bool()))
+    for(i <- 0 to conf.CSC_ATOMC-1){
+        input_mask_vec(i) := io.input.bits.mask(i)
+    }
+    val input_data_vec = Wire(Vec(conf.CSC_ATOMC, UInt(conf.CSC_BPE.W)))
+    for(i <- 0 to conf.CSC_ATOMC-1){
+        input_data_vec(i) := io.input.bits.data(conf.CSC_BPE*i+conf.CSC_BPE-1, conf.CSC_BPE*i)
+    }
+    val input_sel_vec = Wire(Vec(conf.CSC_ATOMK, Bool()))
+    for(i <- 0 to conf.CSC_ATOMK-1){
+        input_sel_vec(i) := io.input.bits.sel(i)
+    }
     ////////////////////////////////// phase I: calculate sums for mux //////////////////////////////////
-    val input_mask_gated = Mux(io.input_mask_en(8), io.input.bits.mask, VecInit(Seq.fill(conf.CSC_ATOMC)(false.B)))
+    val input_mask_gated = Mux(io.input_mask_en(8), input_mask_vec, VecInit(Seq.fill(conf.CSC_ATOMC)(false.B)))
     val vec_sum = Wire(MixedVec((0 to conf.CSC_ATOMC-1) map { i => UInt((log2Ceil(i+2)).W) }))
 
     for(i <- 0 to conf.CSC_ATOMC-1){     
@@ -69,9 +92,9 @@ withClock(io.nvdla_core_clk){
 
     valid_d1 := io.input.valid
     when(io.input.valid){
-        data_d1 := io.input.bits.data
-        mask_d1 := io.input.bits.mask
-        sel_d1 := io.input.bits.sel       
+        data_d1 := input_data_vec
+        mask_d1 := input_mask_vec
+        sel_d1 := input_sel_vec       
     }
 
     for(i <- 0 to conf.CSC_ATOMC-1){
@@ -126,15 +149,15 @@ withClock(io.nvdla_core_clk){
 
     valid_d3 := valid_d2
     when(valid_d2){
-        mask_d3 := mask_d2_w
+        mask_d3 := mask_d2_w 
         sel_d3 := sel_d2
         vec_data_d3 := vec_data_d2
     }
 
     ////////////////////////////////// output: rename //////////////////////////////////    
     io.output.valid := valid_d3
-    io.output.bits.mask := mask_d3
-    io.output.bits.sel := sel_d3
+    io.output.bits.mask := mask_d3.asUInt
+    io.output.bits.sel := sel_d3.asUInt
     io.output.bits.data := vec_data_d3
     
 }}

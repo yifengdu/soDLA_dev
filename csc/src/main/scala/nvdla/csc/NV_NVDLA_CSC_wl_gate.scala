@@ -5,7 +5,7 @@ import chisel3.experimental._
 import chisel3.util._
 
 class csc2cmac_wt_gold_if(implicit val conf: nvdlaConfig) extends Bundle{
-    val sel = Output(Vec(conf.NVDLA_MAC_ATOMIC_K_SIZE_DIV2, Bool()))
+    val sel = Output(UInt(conf.NVDLA_MAC_ATOMIC_K_SIZE_DIV2.W))
     val mask = Output(UInt(conf.NVDLA_MAC_ATOMIC_C_SIZE.W))
     val data = Output(Vec(conf.NVDLA_MAC_ATOMIC_C_SIZE, UInt(conf.NVDLA_BPE.W)))
 }
@@ -756,7 +756,7 @@ withClock(io.nvdla_core_clk){
 
 
     //////////////////////////////////// generate select signal ////////////////////////////////////
-    val wt_rsp_last_stripe_end = RegInit(false.B)
+    val wt_rsp_last_stripe_end = RegInit(false.B) 
     val wt_rsp_sel_d1 = RegInit("b1".asUInt(conf.CSC_ATOMK.W))
 
     val wt_rsp_sel_w = Mux(wt_rsp_last_stripe_end, "b1".asUInt(conf.CSC_ATOMK.W), 
@@ -783,11 +783,11 @@ withClock(io.nvdla_core_clk){
 
     val u_dec = Module(new NV_NVDLA_CSC_WL_dec)
     u_dec.io.nvdla_core_clk := io.nvdla_core_clk          //|< i
-    u_dec.io.input.bits.data := dec_input_data  //|< r
-    u_dec.io.input.bits.mask := dec_input_mask  //|< r
+    u_dec.io.input.bits.data := dec_input_data.asUInt  //|< r
+    u_dec.io.input.bits.mask := dec_input_mask.asUInt  //|< r
     u_dec.io.input_mask_en := dec_input_mask_en  //|< r
     u_dec.io.input.valid := dec_input_pipe_valid    //|< r
-    u_dec.io.input.bits.sel := dec_input_sel     //|< w
+    u_dec.io.input.bits.sel := dec_input_sel.asUInt     //|< w
     val sc2mac_out_data = u_dec.io.output.bits.data
     val sc2mac_out_mask = u_dec.io.output.bits.mask
     val sc2mac_out_pvld = u_dec.io.output.valid
@@ -836,8 +836,8 @@ withClock(io.nvdla_core_clk){
     io.sc2mac_wt_b.valid := sc2mac_wt_b_pvld_out
     io.sc2mac_wt_a.bits.mask := sc2mac_wt_a_mask_out.asUInt
     io.sc2mac_wt_b.bits.mask := sc2mac_wt_b_mask_out.asUInt
-    io.sc2mac_wt_a.bits.sel := sc2mac_wt_a_sel_out
-    io.sc2mac_wt_b.bits.sel := sc2mac_wt_b_sel_out 
+    io.sc2mac_wt_a.bits.sel := sc2mac_wt_a_sel_out.asUInt  
+    io.sc2mac_wt_b.bits.sel := sc2mac_wt_b_sel_out.asUInt 
     io.sc2mac_wt_a.bits.data := sc2mac_wt_a_data_out
     io.sc2mac_wt_b.bits.data := sc2mac_wt_b_data_out
 
