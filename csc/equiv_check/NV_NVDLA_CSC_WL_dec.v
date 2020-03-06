@@ -1,4 +1,4 @@
-module NV_NVDLA_CSC_WL_dec( // @[:@3.2]
+module NV_NVDLA_CSC_WL_dec_gate( // @[:@3.2]
   input          io_nvdla_core_rstn, // @[:@5.4]
   input          io_nvdla_core_clk, // @[:@6.4]
   input          io_input_pipe_valid, // @[:@6.4]
