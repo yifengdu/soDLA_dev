@@ -32611,8 +32611,7 @@ input [64 -1:0] input_mask;
 input [9:0] input_mask_en;
 input input_pipe_valid;
 input [32 -1:0] input_sel;
-input is_fp16;
-input is_int8;
+
 //: for(my $i = 0; $i < 64; $i ++) {
 //: print qq(output [8 -1:0] output_data${i};\n);
 //: }
