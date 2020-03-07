@@ -32529,8 +32529,7 @@ module NV_NVDLA_CSC_WL_dec (
   ,input_mask_en
   ,input_pipe_valid
   ,input_sel
-  ,is_fp16
-  ,is_int8
+
 //: for(my $i = 0; $i < 64; $i ++) {
 //: print qq( ,output_data${i}\n);
 //: }
