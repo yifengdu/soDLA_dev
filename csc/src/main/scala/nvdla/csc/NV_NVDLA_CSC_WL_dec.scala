@@ -4,6 +4,7 @@
  import chisel3.experimental._
  import chisel3.util._
 
+@chiselName
 class csc_wl_dec_goldinput_if(implicit val conf: nvdlaConfig) extends Bundle{
     val mask = Output(UInt(conf.CSC_ATOMC.W))
     val data = Output(UInt((conf.CSC_ATOMC*conf.CSC_BPE).W))
@@ -20,6 +21,7 @@ class NV_NVDLA_CSC_WL_dec(implicit val conf: nvdlaConfig) extends Module {
     val io = IO(new Bundle {
         //clock
         val nvdla_core_clk = Input(Clock()) 
+        val nvdla_core_rstn = Input(Bool())
 
         //input 
         val input = Flipped(ValidIO(new csc_wl_dec_goldinput_if))
@@ -50,7 +52,7 @@ class NV_NVDLA_CSC_WL_dec(implicit val conf: nvdlaConfig) extends Module {
     //           └─┐  ┐  ┌───────┬──┐  ┌──┘         
     //             │ ─┤ ─┤       │ ─┤ ─┤         
     //             └──┴──┘       └──┴──┘ 
-withClock(io.nvdla_core_clk){
+withClockAndReset(io.nvdla_core_clk,!io.nvdla_core_rstn){
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Decoder of compressed weight                                                  
     //
